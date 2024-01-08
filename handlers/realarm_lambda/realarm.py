@@ -10,7 +10,7 @@ def get_all_alarms():
     alarms = []
     paginator = cloudwatch.get_paginator('describe_alarms')
 
-    for page in paginator.paginate():
+    for page in paginator.paginate(PaginationConfig={'PageSize': 100}):
         for alarm in page['MetricAlarms']:
             alarms.append(alarm)
             print(f"Found alarm: {alarm['AlarmName']} with state: {alarm['StateValue']}")
