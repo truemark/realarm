@@ -6,7 +6,7 @@ cloudwatch = boto3.client('cloudwatch')
 
 
 def get_all_alarms():
-    print("Fetching all alarms...")
+    print("Fetching all alarms....")
     alarms = []
     paginator = cloudwatch.get_paginator('describe_alarms')
 
