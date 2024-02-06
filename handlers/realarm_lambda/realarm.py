@@ -10,7 +10,7 @@ def get_all_alarms():
     alarms = []
     paginator = cloudwatch.get_paginator('describe_alarms')
 
-    for page in paginator.paginate():
+    for page in paginator.paginate(PaginationConfig={'PageSize': 100}):
         for alarm in page['MetricAlarms']:
             alarms.append(alarm)
             print(f"Found alarm: {alarm['AlarmName']} with state: {alarm['StateValue']}")
@@ -55,6 +55,6 @@ def check_and_reset_alarms():
                   f"Alarm: {alarm['AlarmName']} has the following actions: {actions}")
 
 
-def lambda_handler(event, context):
+def handler(event, context):
     print("Received event:", json.dumps(event))
     check_and_reset_alarms()
