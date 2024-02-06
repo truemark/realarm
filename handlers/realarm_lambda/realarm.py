@@ -55,6 +55,6 @@ def check_and_reset_alarms():
                   f"Alarm: {alarm['AlarmName']} has the following actions: {actions}")
 
 
-def lambda_handler(event, context):
+def handler(event, context):
     print("Received event:", json.dumps(event))
     check_and_reset_alarms()
