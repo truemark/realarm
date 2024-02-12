@@ -43,7 +43,7 @@ export class Realarm extends ExtendedStack {
 
         AlertRole.addToPolicy(new iam.PolicyStatement({
             resources: [
-                `arn:aws:logs:${cdk.Stack.of(this).region}:${cdk.Stack.of(this).account}:log-group:/aws/lambda/RealarmStack-reAlarmLambda*`
+                `arn:aws:logs:${cdk.Stack.of(this).region}:${cdk.Stack.of(this).account}:log-group:/aws/lambda/RealarmStackRealarm*`
             ],
             actions: [
                 'logs:CreateLogGroup',
@@ -61,8 +61,8 @@ export class Realarm extends ExtendedStack {
         const RealarmLambda = new PythonFunction(this, 'ReAlarmLambda', {
             runtime: lambda.Runtime.PYTHON_3_9,
             memorySize: 512,
-            entry: '../handlers/realarm_lambda',
-            handler: 'alert.handler',
+            entry: './handlers/realarm_lambda',
+            handler: 'index.handler',
             timeout: Duration.seconds(30),
             role: AlertRole
         });
