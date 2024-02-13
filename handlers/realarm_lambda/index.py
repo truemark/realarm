@@ -11,14 +11,9 @@ WARN = 40
 FATAL = 60
 
 
-# Default log level
-DEFAULT_LOG_LEVEL = WARN
-
-
 # Custom logger function
 def log(level, msg, svc="AWS LambdaAdd", name="log"):
-    if level < DEFAULT_LOG_LEVEL:
-        return  # Skip logging if below default log level
+
     log_entry = {
         "level": level,
         "time": int(time.time() * 1000),
