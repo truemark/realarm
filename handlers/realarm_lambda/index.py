@@ -70,8 +70,12 @@ def check_and_reset_alarms():
         # Reset the alarm only if it has no Auto Scaling actions
         if not has_autoscaling_action and alarm['StateValue'] == 'ALARM':
             log(INFO, f"{alarm['AlarmName']} is in ALARM state. Resetting...'")
-            reset_alarm_state(alarm['AlarmName'])
-            log(INFO, f"Successfully reset alarm: {alarm['AlarmName']}")
+            try:
+                reset_alarm_state(alarm['AlarmName'])
+                log(INFO, f"Successfully reset alarm: {alarm['AlarmName']}")
+            except Exception as e:
+                log(FATAL, f"Failed to reset alarm: {alarm['AlarmName']}. Error: {e}")
+                raise e
         elif has_autoscaling_action and alarm['StateValue'] == 'ALARM':
             log(INFO, f"Skipped resetting alarm: {alarm['AlarmName']} due to Auto Scaling action.\n"
                       f"Alarm: {alarm['AlarmName']} has the following AutoScaling actions: {actions}")
