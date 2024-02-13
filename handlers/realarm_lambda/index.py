@@ -57,7 +57,8 @@ def check_and_reset_alarms():
 
     for alarm in alarms:
         actions = alarm.get('AlarmActions', [])
-        log(INFO, f"Alarm: {alarm['AlarmName']} has the following actions: {actions}")
+        log(INFO, f"Alarm: {alarm['AlarmName']} is in a {alarm['StateValue']} state and has the following actions: "
+                  f"{actions}")
         has_autoscaling_action = False
 
         # Check if any action is related to Auto Scaling
@@ -68,10 +69,12 @@ def check_and_reset_alarms():
 
         # Reset the alarm only if it has no Auto Scaling actions
         if not has_autoscaling_action and alarm['StateValue'] == 'ALARM':
+            log(INFO, f"{alarm['AlarmName']} is in ALARM state. Resetting...'")
             reset_alarm_state(alarm['AlarmName'])
+            log(INFO, f"Successfully reset alarm: {alarm['AlarmName']}")
         elif has_autoscaling_action and alarm['StateValue'] == 'ALARM':
             log(INFO, f"Skipped resetting alarm: {alarm['AlarmName']} due to Auto Scaling action.\n"
-                      f"Alarm: {alarm['AlarmName']} has the following actions: {actions}")
+                      f"Alarm: {alarm['AlarmName']} has the following AutoScaling actions: {actions}")
 
 
 def handler(event, context):
