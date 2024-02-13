@@ -81,6 +81,7 @@ def check_and_reset_alarms():
             log(INFO, f"Skipped resetting alarm: {alarm['AlarmName']} due to Auto Scaling action.\n"
                       f"Alarm: {alarm['AlarmName']} has the following actions: {actions}")
 
+
 def handler(event, context):
     log(INFO, "Received event: " + json.dumps(event))
     check_and_reset_alarms()
