@@ -6,28 +6,25 @@ import time
 cloudwatch = boto3.client('cloudwatch')
 
 # Define log levels
-TRACE = 10
-DEBUG = 20
 INFO = 30
 WARN = 40
-ERROR = 50
 FATAL = 60
-PANIC = 70
+
 
 # Default log level
 DEFAULT_LOG_LEVEL = WARN
 
 
 # Custom logger function
-def log(level, msg, svc="CloudWatchService", name="CustomLogger"):
+def log(level, msg, svc="AWS LambdaAdd", name="log"):
     if level < DEFAULT_LOG_LEVEL:
         return  # Skip logging if below default log level
     log_entry = {
         "level": level,
+        "time": int(time.time() * 1000),
         "msg": msg,
         "svc": svc,
         "name": name,
-        "time": int(time.time() * 1000)  # Current time in milliseconds since epoch
     }
     print(json.dumps(log_entry))
 
